@@ -1,0 +1,13 @@
+.gameboard {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: repeat(3, 200px);
+}
+
+.tile {
+    width: 200px;
+    height: 200px;
+
+    background-color: red;
+    border: 4px solid black; 
+}
