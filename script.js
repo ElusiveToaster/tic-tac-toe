@@ -2,7 +2,31 @@ const gameBoard = (() => {
     tile = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     
     const nextTurn = () => {
-        
+        currentPlayer.rows.forEach((row) => {
+            const tileDiv = document.createElement('h1');
+            const page = document.querySelector('body');
+            
+            if (currentPlayer == player1) {
+                tileDiv.innerText = "Player 1 wins!";
+            } else {
+                tileDiv.innerText = "Player 2 wins!";
+            }
+            
+
+            if (row == 3) {
+                page.appendChild(tileDiv);
+            }
+        });
+
+        currentPlayer.columns.forEach((column) => {
+            const tileDiv = document.createElement('h1');
+            const page = document.querySelector('body');
+            tileDiv.innerText = "Player 1 wins!";
+
+            if (column == 3) {
+                page.appendChild(tileDiv);
+            }
+        });
 
         if (currentPlayer == player1) {
             currentPlayer = player2;
