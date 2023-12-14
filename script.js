@@ -2,6 +2,8 @@ const gameBoard = (() => {
     tile = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     
     const nextTurn = () => {
+
+        // Checks number of tokens in each row to determine if player has won the game
         currentPlayer.rows.forEach((row) => {
             const tileDiv = document.createElement('h1');
             const page = document.querySelector('body');
@@ -18,20 +20,32 @@ const gameBoard = (() => {
             }
         });
 
+        // Checks number of tokens in each column to determine if player has won the game
         currentPlayer.columns.forEach((column) => {
             const tileDiv = document.createElement('h1');
             const page = document.querySelector('body');
-            tileDiv.innerText = "Player 1 wins!";
+            
+            if (currentPlayer == player1) {
+                tileDiv.innerText = "Player 1 wins!";
+            } else {
+                tileDiv.innerText = "Player 2 wins!";
+            }
 
             if (column == 3) {
                 page.appendChild(tileDiv);
             }
         });
 
+        // Checks number of tokens in each diagonal to determine if player has won the game
         currentPlayer.diagonals.forEach((diagonal) => {
             const tileDiv = document.createElement('h1');
             const page = document.querySelector('body');
-            tileDiv.innerText = "Player 1 wins!";
+            
+            if (currentPlayer == player1) {
+                tileDiv.innerText = "Player 1 wins!";
+            } else {
+                tileDiv.innerText = "Player 2 wins!";
+            }
 
             if (diagonal == 3) {
                 page.appendChild(tileDiv);
@@ -64,47 +78,56 @@ const player = (title, side) => {
     const placeTile = (tile) => {
         const tileDiv = document.getElementById(tile.target.id);
         const playerToken = document.createElement('h1');
-        
-            if (tile.target.id == 1 || tile.target.id == 2 || tile.target.id == 3) {
-                currentPlayer.rows[0]++;
-                //console.log(row1);
-            }
-            else if (tile.target.id == 4 || tile.target.id == 5 || tile.target.id == 6) {
-                currentPlayer.rows[1]++;
-                //console.log(gameBoard.row2[0])
-            }
-            else if (tile.target.id == 7 || tile.target.id == 8 || tile.target.id == 9) {
-                currentPlayer.rows[2]++;
-                //console.log(gameBoard.row3[0])
+            
+            // This checks that tile is empty
+            if (tileDiv.innerText == false) {       
+                
+                // Tracks number of x/o's placed in each row, column and diagonal
+                if (tile.target.id == 1 || tile.target.id == 2 || tile.target.id == 3) {        
+                    currentPlayer.rows[0]++;
+                    //console.log(row1);
+                }
+                else if (tile.target.id == 4 || tile.target.id == 5 || tile.target.id == 6) {
+                    currentPlayer.rows[1]++;
+                    //console.log(gameBoard.row2[0])
+                }
+                else if (tile.target.id == 7 || tile.target.id == 8 || tile.target.id == 9) {
+                    currentPlayer.rows[2]++;
+                    //console.log(gameBoard.row3[0])
+                }
+    
+                if (tile.target.id == 1 || tile.target.id == 4 || tile.target.id == 7) {
+                    currentPlayer.columns[0]++;
+                    //console.log(gameBoard.column1[0])
+                }
+                else if (tile.target.id == 2 || tile.target.id == 5 || tile.target.id == 8) {
+                    currentPlayer.columns[1]++;
+                    //console.log(gameBoard.column2[0])
+                }
+                else if (tile.target.id == 3 || tile.target.id == 6 || tile.target.id == 9) {
+                    currentPlayer.columns[2]++;
+                    //console.log(gameBoard.column3[0])
+                }
+    
+                if (tile.target.id == 1 || tile.target.id == 5 || tile.target.id == 9) {
+                    currentPlayer.diagonals[0]++;
+                    //console.log(gameBoard.column3[0])
+                }
+                if (tile.target.id == 3 || tile.target.id == 5 || tile.target.id == 7) {
+                    currentPlayer.diagonals[1]++;
+                    //console.log(gameBoard.column3[0])
+                }
+    
+                
+            // Places player token and progresses turn to next player
+            playerToken.innerText = currentPlayer.side;     
+            tileDiv.appendChild(playerToken);
+            gameBoard.nextTurn();       
+            
+
             }
 
-            if (tile.target.id == 1 || tile.target.id == 4 || tile.target.id == 7) {
-                currentPlayer.columns[0]++;
-                //console.log(gameBoard.column1[0])
-            }
-            else if (tile.target.id == 2 || tile.target.id == 5 || tile.target.id == 8) {
-                currentPlayer.columns[1]++;
-                //console.log(gameBoard.column2[0])
-            }
-            else if (tile.target.id == 3 || tile.target.id == 6 || tile.target.id == 9) {
-                currentPlayer.columns[2]++;
-                //console.log(gameBoard.column3[0])
-            }
-
-            if (tile.target.id == 1 || tile.target.id == 5 || tile.target.id == 9) {
-                currentPlayer.diagonals[0]++;
-                //console.log(gameBoard.column3[0])
-            }
-            if (tile.target.id == 3 || tile.target.id == 5 || tile.target.id == 7) {
-                currentPlayer.diagonals[1]++;
-                //console.log(gameBoard.column3[0])
-            }
-
-            // Increases score for each row and column
-
-        playerToken.innerText = currentPlayer.side;
-        tileDiv.appendChild(playerToken);
-        gameBoard.nextTurn();
+            
     };
 
 
@@ -118,7 +141,8 @@ let currentPlayer = player1;
 
 console.log(gameBoard.tile);
 
-gameBoard.tile.forEach((tileNumber) => {
+// Creates the tiles
+gameBoard.tile.forEach((tileNumber) => {        
     const tileDiv = document.createElement('div');
     const gameboard = document.querySelector('.gameboard');
 
