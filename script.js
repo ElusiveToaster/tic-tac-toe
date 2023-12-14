@@ -28,6 +28,16 @@ const gameBoard = (() => {
             }
         });
 
+        currentPlayer.diagonals.forEach((diagonal) => {
+            const tileDiv = document.createElement('h1');
+            const page = document.querySelector('body');
+            tileDiv.innerText = "Player 1 wins!";
+
+            if (diagonal == 3) {
+                page.appendChild(tileDiv);
+            }
+        });
+
         if (currentPlayer == player1) {
             currentPlayer = player2;
         } else {
@@ -47,6 +57,8 @@ const player = (title, side) => {
     let rows = [0, 0, 0];
 
     let columns = [0, 0, 0];
+
+    let diagonals = [0, 0];
 
    
     const placeTile = (tile) => {
@@ -79,6 +91,15 @@ const player = (title, side) => {
                 //console.log(gameBoard.column3[0])
             }
 
+            if (tile.target.id == 1 || tile.target.id == 5 || tile.target.id == 9) {
+                currentPlayer.diagonals[0]++;
+                //console.log(gameBoard.column3[0])
+            }
+            if (tile.target.id == 3 || tile.target.id == 5 || tile.target.id == 7) {
+                currentPlayer.diagonals[1]++;
+                //console.log(gameBoard.column3[0])
+            }
+
             // Increases score for each row and column
 
         playerToken.innerText = currentPlayer.side;
@@ -87,7 +108,7 @@ const player = (title, side) => {
     };
 
 
-    return {title, side, placeTile, rows, columns};
+    return {title, side, placeTile, rows, columns, diagonals};
 
 };
 
